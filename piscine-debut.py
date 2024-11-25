@@ -14,6 +14,14 @@ def cmd_liste(liste):
     for elt in liste:
         print(f"Prénom : {elt[0]}, Type de nage : {elt[1]}, Combien de longueur : {elt[2]}")
 
+def cmd_exit():
+    """Fini la boucle"""
+    temp= input('En êtes-vous sûr ? (o)ui/(n)on ?')
+    if temp =='o':
+        return False
+    else :
+        return True
+        
 while isAlive:
     commande = input("Que faut-il faire ? ")
 
@@ -26,9 +34,7 @@ while isAlive:
         continue
 
     if commande == "exit":
-        temp= input('En êtes-vous sûr ? (o)ui/(n)on ?')
-        if temp =='o':
-            isAlive = False
+        isAlive = cmd_exit()
         continue
 
     print(f"Commande {commande} inconnue")
