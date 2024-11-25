@@ -1,6 +1,5 @@
 liste = [("Pierre","Dos",10),("Paul","Brasse",13),("Léa","Crawl",6), ("Léa","Brasse",8) ]
 commande = ''
-isAlive = True
 
 def cmd_ajout(liste):
     """Ajoute un évenement à la liste"""
@@ -11,8 +10,30 @@ def cmd_ajout(liste):
 
 def cmd_liste(liste):
     """Affiche tous les performances des nageurs"""
+    print("Prénom       |   nage    |   longueur")
+    print("-------------------------------------")
     for elt in liste:
-        print(f"Prénom : {elt[0]}, Type de nage : {elt[1]}, Combien de longueur : {elt[2]}")
+        print(f" {elt[0]:13}| {elt[1]:13}|  {elt[2]}")
+
+def cmd_nageur(liste):
+    """Affiche tableau d'un nageur"""
+    qui = input("Quel nageur ? ")
+    print("Performances de ", qui)
+    print("   nage    |   longueur")
+    print("-----------------------")
+    for elt in liste:
+        if elt[0] == qui:
+            print(f" {elt[1]:10}|   {elt[2]}")
+
+def cmd_nage(liste):
+    """Affiche tableau des nages"""
+    quel= input("Quel type de nage ? ")
+    print("Nage ", quel)
+    print("   Nageur   |   Longueur")
+    print("------------------------")
+    for elt in liste:
+        if elt[1] == quel:
+            print(f" {elt[0]:11}|   {elt[2]}")
 
 def cmd_exit():
     """Fini la boucle"""
@@ -22,6 +43,7 @@ def cmd_exit():
     else :
         return True
         
+isAlive = True
 while isAlive:
     commande = input("Que faut-il faire ? ")
 
@@ -31,6 +53,14 @@ while isAlive:
    
     if commande == 'liste':
         cmd_liste(liste)
+        continue
+
+    if commande == 'nageur':
+        cmd_nageur(liste)
+        continue
+
+    if commande == "nage":
+        cmd_nage(liste)
         continue
 
     if commande == "exit":
