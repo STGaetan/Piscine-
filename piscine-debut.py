@@ -1,5 +1,14 @@
 liste = [("Pierre","Dos",10),("Paul","Brasse",13),("Léa","Crawl",6), ("Léa","Brasse",8) ]
+listeNageur = []
+listeNage = []
 commande = ''
+
+def cmd_individu(listeNageur):
+    """Ajoute un nouveau nageur"""
+    prénom = input("Prénom du nouveau nageur ")
+    id= len(listeNageur)+1
+    listeNageur.append( (id,prénom))
+    print(listeNageur)
 
 def cmd_ajout(liste):
     """Ajoute un évenement à la liste"""
@@ -35,16 +44,16 @@ def cmd_nage(liste):
         if elt[1] == quel:
             print(f" {elt[0]:11}|   {elt[2]}")
 
-def cmd_save(liste):
+def cmd_save(liste, filename):
     """Sauvegarde le tableau"""
-    fichier = open('save.csv', 'w')
+    fichier = open(filename, 'w')
     for elt in liste:
         fichier.write(elt[0]+','+elt[1]+','+str(elt[2])+"\n")
     fichier.close()
 
-def cmd_load(liste):
+def cmd_load(liste, filename):
     """Charge la sauvegarde"""
-    fichier = open('save.csv', 'r')
+    fichier = open(filename, 'r')
     for line in fichier:
         line.strip()
         if line[-1] == '\n':
@@ -59,16 +68,21 @@ def cmd_exit():
     """Fini la boucle"""
     temp= input('En êtes-vous sûr ? (o)ui/(n)on ?')
     if temp =='o':
+        cmd_save(liste, 'save.backup')
         return False
     else :
         return True
-        
+
 isAlive = True
 while isAlive:
     commande = input("Que faut-il faire ? ")
 
     if commande == 'ajout':
         cmd_ajout(liste)
+        continue
+
+    if commande == 'individu':
+        cmd_individu(listeNageur)
         continue
    
     if commande == 'liste':
@@ -84,15 +98,15 @@ while isAlive:
         continue
 
     if commande == "save":
-        cmd_save(liste)
+        cmd_save(liste, "save.csv")
         continue
 
     if commande == "load":
-        cmd_load(liste)
+        cmd_load(liste, "save.csv")
         continue
 
     if commande == "exit":
-        isAlive = cmd_exit()
+        isAlive = cmd_exit(liste)
         continue
 
     print(f"Commande {commande} inconnue")
