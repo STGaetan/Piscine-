@@ -1,9 +1,12 @@
+import os
+
+commande = ''
+
 #default values
 param = {'bdd': [(1,3,10),(2,1,13),(3,2,6), (3,1,8) ],
          'nages': [(1, "Brasse"), (2, "Dos"), (3, "Crawl")],
          'nageurs': [(1, "Pierre"), (2, "Paul"), (3, "Léa")]
         }
-commande = ''
 
 def reset(param):
     '''réinitialise la bdd'''
@@ -131,13 +134,12 @@ def get_cmd():
     msg = msg.lower()
     return msg
 
-def cmd_exit():
-    """Fini la boucle"""
-    temp= input('En êtes-vous sûr ? (o)ui/(n)on ?')
-    if temp =='o':
+def cmd_exit(param):
+    tmp = input("En êtes-vous sûr ? (o)ui/(n)on ")
+    if tmp == 'o':
         cmd_save(param, 'save.backup')
         return False
-    else :
+    else:
         return True
 
 #
@@ -145,6 +147,8 @@ def cmd_exit():
 #
 
 isAlive = True
+if os.path.exists('save.backup'):
+    cmd_load(param, 'save.backup')
 while isAlive:
     commande = get_cmd()
 
