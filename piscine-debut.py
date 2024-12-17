@@ -1,8 +1,8 @@
+#default values
 param = {'bdd': [(1,3,10),(2,1,13),(3,2,6), (3,1,8) ],
          'nages': [(1, "Brasse"), (2, "Dos"), (3, "Crawl")],
          'nageurs': [(1, "Pierre"), (2, "Paul"), (3, "Léa")]
         }
-
 commande = ''
 
 def reset(param):
@@ -81,7 +81,7 @@ def cmd_nage(param):
             nageur = get_str_from_num_in_list(elt[0], param['nageurs'])
             print(f" {elt[0]:11}|   {elt[2]}")
 
-def cmd_save(param, filename):
+def cmd_save(param, filename = 'save.csv'):
     '''sauvegarde complète de la BDD'''
     fichier = open(filename, 'w')
     # sauvegarde des nageurs
@@ -98,7 +98,8 @@ def cmd_save(param, filename):
         fichier.write(str(elt[0])+','+str(elt[1])+','+str(elt[2])+"\n")
     fichier.close()
 
-def cmd_load(param, filename):
+def cmd_load(param, filename = 'save.csv'):
+    'charge la BDD'
     '''chargement complet la BDD avec réinitialisation'''
     reset(param)
     key = ''
@@ -124,6 +125,12 @@ def cmd_load(param, filename):
         param[key].append(tuple(tmp))
     fichier.close()
 
+def get_cmd():
+    '''Traitement de la commande d'entrée'''
+    msg = input("Que faut-il faire ? ")
+    msg = msg.lower()
+    return msg
+
 def cmd_exit():
     """Fini la boucle"""
     temp= input('En êtes-vous sûr ? (o)ui/(n)on ?')
@@ -139,7 +146,7 @@ def cmd_exit():
 
 isAlive = True
 while isAlive:
-    commande = input("Que faut-il faire ? ")
+    commande = get_cmd()
 
     if commande == 'ajout':
         cmd_ajout(param)
@@ -166,11 +173,11 @@ while isAlive:
         continue
 
     if commande == "save":
-        cmd_save(param, "save.csv")
+        cmd_save(param)
         continue
 
     if commande == "load":
-        cmd_load(param, "save.csv")
+        cmd_load(param)
         continue
 
     if commande == "exit":
