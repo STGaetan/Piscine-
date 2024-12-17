@@ -33,29 +33,33 @@ def cmd_liste(liste):
 
 def cmd_nageur(liste):
     """Affiche tableau d'un nageur"""
-    qui = input("Quel nageur ? ")
-    print("Performances de ", qui)
+    for elt in listeNageur:
+        print(f"{elt[0]:5} : {elt[1]}")
+    tmp = int(input("Quel numéro de nageur ? "))
+    print("Performances de ", tmp)
     print("   nage    |   longueur")
     print("-----------------------")
     for elt in liste:
-        if elt[0] == qui:
+        if elt[0] == tmp:
             print(f" {elt[1]:10}|   {elt[2]}")
 
 def cmd_nage(liste):
     """Affiche tableau des nages"""
-    quel= input("Quel type de nage ? ")
-    print("Nage ", quel)
+    for elt in listeNages:
+        print(f"{elt[0]:5} : {elt[1]}")
+    tmp = int(input("Quel numéro de nage ? "))
+    print("Nage ", tmp)
     print("   Nageur   |   Longueur")
     print("------------------------")
     for elt in liste:
-        if elt[1] == quel:
+        if elt[1] == tmp:
             print(f" {elt[0]:11}|   {elt[2]}")
 
 def cmd_save(liste, filename):
     """Sauvegarde le tableau"""
     fichier = open(filename, 'w')
     for elt in liste:
-        fichier.write(elt[0]+','+elt[1]+','+str(elt[2])+"\n")
+       fichier.write(str(elt[0])+','+str(elt[1])+','+str(elt[2])+"\n")
     fichier.close()
 
 def cmd_load(liste, filename):
