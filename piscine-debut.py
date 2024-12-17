@@ -40,7 +40,10 @@ def cmd_liste(liste):
     print("Prénom       |   nage    |   longueur")
     print("-------------------------------------")
     for elt in liste:
-        print(f" {elt[0]:13}| {elt[1]:13}|  {elt[2]}")
+        nageur = get_str_from_num_in_list(elt[0], listeNageur)
+        nage = get_str_from_num_in_list(elt[1], listeNages)
+        print(f" {nageur:11}| {nage:8}|  {elt[2]}")
+
 
 def cmd_nageur(liste):
     """Affiche tableau d'un nageur"""
