@@ -5,6 +5,13 @@ param = {'bdd': [(1,3,10),(2,1,13),(3,2,6), (3,1,8) ],
 
 commande = ''
 
+def reset(param):
+    '''réinitialise la bdd'''
+    param.clear()
+    param['bdd'] = []
+    param['nages'] = []
+    param['nageurs'] = []
+
 def get_str_from_num_in_list(num, liste):
     """Retourne une str d'un nbr dans une liste"""
     for elt in liste:
@@ -74,15 +81,27 @@ def cmd_nage(param):
             nageur = get_str_from_num_in_list(elt[0], param['nageurs'])
             print(f" {elt[0]:11}|   {elt[2]}")
 
-def cmd_save(liste, filename):
-    """Sauvegarde le tableau"""
+def cmd_save(param, filename):
+    '''sauvegarde complète de la BDD'''
     fichier = open(filename, 'w')
-    for elt in liste:
-       fichier.write(str(elt[0])+','+str(elt[1])+','+str(elt[2])+"\n")
+    # sauvegarde des nageurs
+    fichier.write('@ nageurs\n')
+    for elt in param['nageurs']:
+        fichier.write(str(elt[0])+','+str(elt[1])+"\n")
+    # sauvegarde des nages
+    fichier.write('@ nages\n')
+    for elt in param['nages']:
+        fichier.write(str(elt[0])+','+str(elt[1])+"\n")
+    # sauvegarde des données
+    fichier.write('@ bdd\n')
+    for elt in param['bdd']:
+        fichier.write(str(elt[0])+','+str(elt[1])+','+str(elt[2])+"\n")
     fichier.close()
 
-def cmd_load(liste, filename):
-    """Charge la sauvegarde"""
+def cmd_load(param, filename):
+    '''chargement complet la BDD avec réinitialisation'''
+    reset(param)
+    key = ''
     fichier = open(filename, 'r')
     for line in fichier:
         line.strip()
@@ -90,8 +109,19 @@ def cmd_load(liste, filename):
             line = line[:-1]
         if line[0]=='#':
             continue
+        if line[0]=='@':
+            key = line[2:]
+            continue
+        if key =='':
+            continue
         tmp = line.split(',')
-        liste.append(tuple(tmp))
+        # convertion en int de ce qui doit l'être
+        if key == 'bdd':
+            for i in range(len(tmp)):
+                tmp[i] = int(tmp[i])
+        if key == 'nages' or key == 'nageurs':
+            tmp[0] = int(tmp[0])
+        param[key].append(tuple(tmp))
     fichier.close()
 
 def cmd_exit():
