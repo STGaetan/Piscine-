@@ -3,6 +3,13 @@ listeNageur = [(1, "Pierre"), (2, "Paul"), (3, "Léa")]
 listeNages = [(1, 'Brasse'), (2, 'Crawl'), (3, "dos")]
 commande = ''
 
+def get_str_from_num_in_list(num, liste):
+    """Retourne une str d'un nbr dans une liste"""
+    for elt in liste:
+        if elt[0]==num:
+            return elt[1]
+    return "unknown"
+
 def cmd_individu(listeNageur):
     """Ajoute un nouveau nageur"""
     prénom = input("Prénom du nouveau nageur ? ")
