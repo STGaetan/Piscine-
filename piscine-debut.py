@@ -19,9 +19,13 @@ def cmd_nouvellenage(listeNages):
 
 def cmd_ajout(liste):
     """Ajoute un évenement à la liste"""
-    a = input("Qui nage ? ")
-    b = input("quelle nage ? ")
-    c = input("combien de longueur ? ")
+    for elt in listeNageur:
+        print(f"{elt[0]:5} : {elt[1]}")
+    a = int(input("Nageur n° ? "))
+    for elt in listeNages:
+        print(f"{elt[0]:5} : {elt[1]}")
+    b = int(input("Nage n° ? "))
+    c = int(input("combien de longueur ? "))
     liste.append((a,b,c))
 
 def cmd_liste(liste):
